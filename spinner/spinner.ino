@@ -18,31 +18,33 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(16, PIN, NEO_GRB + NEO_KHZ800);
 // on a live circuit...if you must, connect GND first.
 
 void setup() {
-  strip.setBrightness(20);
+  strip.setBrightness(50);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
 }
 
 void loop() {
+  uint32_t backgroundColor[3]= {50,50,50};
+  uint32_t pixelColor[3]= {255,0, 0};
   // Some example procedures showing how to display to the pixels:
-  spinner(strip.Color(0, 255, 0), strip.Color(255, 0, 0), 5, 50); // Red
+  spinner(backgroundColor, pixelColor, 3, 50); // Red
 }
 
 // Fill the dots one after the other with a color
-void spinner(uint32_t cBackground, uint32_t cPixel, int bulkSize, uint8_t wait) {
+void spinner(uint32_t cBackground[], uint32_t cPixel[], int bulkSize, uint8_t wait) {
   for(uint16_t i=1; i<=strip.numPixels(); i++) {
     setBackgroundColor(cBackground);
     for(int j=0; j<bulkSize; j++) {
-      strip.setPixelColor(((i+j)) % strip.numPixels(), cPixel);
+      strip.setPixelColor(((i+j)) % strip.numPixels(), strip.Color(cPixel[0]/(bulkSize-j), cPixel[1]/(bulkSize-j), cPixel[2]/(bulkSize-j)));
     }
     strip.show();
     delay(wait);
   }
 }
 
-void setBackgroundColor(uint32_t c) {
+void setBackgroundColor(uint32_t c[]) {
   for(uint16_t i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, c);
+    strip.setPixelColor(i, strip.Color(c[0],c[1],c[2]));
   }
   strip.show();
 }
