@@ -89,16 +89,40 @@ void loop() {
         spinner(ABORTED, BACKGROUND, BULK_SIZE, 50);
         break;
       case 4:
-        blink(FAILURE, BACKGROUND, 500);
+        for(short i=0;i<6;i++){
+          blink(FAILURE, BACKGROUND, 500);
+        }
+        progress=8;
         break;
       case 5:
-        blink(SUCCESS, BACKGROUND, 500);
+      for(short i=0;i<6;i++){
+          blink(SUCCESS, BACKGROUND, 500);
+        }
+        progress=9;
         break;
       case 6:
-        blink(UNSTABLE, BACKGROUND, 500);
+        for(short i=0;i<6;i++){
+          blink(UNSTABLE, BACKGROUND, 500);
+        }
+        progress=10;
         break;
       case 7:
-        blink(ABORTED, BACKGROUND, 500);
+        for(short i=0;i<6;i++){
+          blink(ABORTED, BACKGROUND, 500);
+        }
+        progress=11;
+        break;
+      case 8:
+        setDarkerBackgroundColor(FAILURE);
+        break;
+      case 9:
+        setDarkerBackgroundColor(SUCCESS);
+        break;
+      case 10:
+        setDarkerBackgroundColor(UNSTABLE);
+        break;
+      case 11:
+        setDarkerBackgroundColor(BACKGROUND);
         break;
       default:
         strip.show();
@@ -118,7 +142,7 @@ void loop() {
   client.flush();
 
   // Match the request
-  if (request.indexOf("/progress?status=FAILED") != -1)  {
+  if (request.indexOf("/progress?status=FAILURE") != -1)  {
     progress = 0;
   }
   if (request.indexOf("/progress?status=SUCCESS") != -1)  {
@@ -154,7 +178,7 @@ void loop() {
 // Fill the dots one after the other with a color
 void spinner(const int Background[], const int Pixel[], int bulkSize, short wait) {
   for(int i=1; i<=strip.numPixels(); i++) {
-    setBackgroundColor(Background);
+    setDarkerBackgroundColor(Background);
     for(int j=0; j<bulkSize; j++) {
       strip.setPixelColor(((i+j)) % strip.numPixels(), strip.Color(Pixel[0]/(bulkSize-j), Pixel[1]/(bulkSize-j), Pixel[2]/(bulkSize-j)));
     }
