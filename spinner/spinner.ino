@@ -1,11 +1,11 @@
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 6
-const int failure[3]    = {255, 0, 0};       // red
-const int success[3]    = {0, 255, 0};       // green
-const int background[3] = {255, 255, 255};   // white
-const int unstable[3]   = {255, 255, 0};     // yellow
-const int aborted[3]    = {50, 50, 50};       // grey
+const int FAILURE[3]    = {255, 0, 0};       // red
+const int SUCCESS[3]    = {0, 255, 0};       // green
+const int BACKGROUND[3] = {255, 255, 255};   // white
+const int UNSTABLE[3]   = {255, 255, 0};     // yellow
+const int ABORTED[3]    = {50, 50, 50};      // grey
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -30,7 +30,7 @@ void setup() {
 
 void loop() {
   // Some example procedures showing how to display to the pixels:
-  spinner(aborted, success, 3, 50);
+  spinner(BACKGROUND, SUCCESS, 3, 50);
 }
 
 // Fill the dots one after the other with a color
