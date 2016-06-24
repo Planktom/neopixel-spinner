@@ -1,6 +1,11 @@
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 6
+const int failure[3]    = {255, 0, 0};       // red
+const int success[3]    = {0, 255, 0};       // green
+const int background[3] = {255, 255, 255};   // white
+const int unstable[3]   = {255, 255, 0};     // yellow
+const int aborted[3]    = {50, 50, 50};       // grey
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -24,27 +29,25 @@ void setup() {
 }
 
 void loop() {
-  uint32_t backgroundColor[3]= {50,50,50};
-  uint32_t pixelColor[3]= {255,0, 0};
   // Some example procedures showing how to display to the pixels:
-  spinner(backgroundColor, pixelColor, 3, 50); // Red
+  spinner(aborted, success, 3, 50);
 }
 
 // Fill the dots one after the other with a color
-void spinner(uint32_t cBackground[], uint32_t cPixel[], int bulkSize, uint8_t wait) {
-  for(uint16_t i=1; i<=strip.numPixels(); i++) {
-    setBackgroundColor(cBackground);
+void spinner(const int Background[], const int Pixel[], int bulkSize, short wait) {
+  for(int i=1; i<=strip.numPixels(); i++) {
+    setBackgroundColor(Background);
     for(int j=0; j<bulkSize; j++) {
-      strip.setPixelColor(((i+j)) % strip.numPixels(), strip.Color(cPixel[0]/(bulkSize-j), cPixel[1]/(bulkSize-j), cPixel[2]/(bulkSize-j)));
+      strip.setPixelColor(((i+j)) % strip.numPixels(), strip.Color(Pixel[0]/(bulkSize-j), Pixel[1]/(bulkSize-j), Pixel[2]/(bulkSize-j)));
     }
     strip.show();
     delay(wait);
   }
 }
 
-void setBackgroundColor(uint32_t c[]) {
+void setBackgroundColor(const int color[]) {
   for(uint16_t i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, strip.Color(c[0],c[1],c[2]));
+    strip.setPixelColor(i, strip.Color(color[0],color[1],color[2]));
   }
   strip.show();
 }
