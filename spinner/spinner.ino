@@ -30,7 +30,9 @@ void setup() {
 
 void loop() {
   // Some example procedures showing how to display to the pixels:
-  spinner(BACKGROUND, SUCCESS, 3, 50);
+  //spinner(BACKGROUND, SUCCESS, 3, 50);
+  // let all LEDs blink
+  blink(FAILURE, 500);
 }
 
 // Fill the dots one after the other with a color
@@ -43,6 +45,14 @@ void spinner(const int Background[], const int Pixel[], int bulkSize, short wait
     strip.show();
     delay(wait);
   }
+}
+
+// let all LEDs blink
+void blink(const int color[], short wait) {
+  setBackgroundColor(color);
+  delay(wait);
+  setBackgroundColor(BACKGROUND);
+  delay(wait);
 }
 
 void setBackgroundColor(const int color[]) {
